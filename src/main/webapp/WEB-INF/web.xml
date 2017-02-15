@@ -7,11 +7,24 @@
 
     <servlet>
         <servlet-name>App</servlet-name>
-        <servlet-class>App</servlet-class>
+        <servlet-class>com.epam.dogsapp.App</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>App</servlet-name>
-        <url-pattern>App</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+    <!--<filter>-->
+        <!--<filter-name>Filter</filter-name>-->
+        <!--<filter-class>com.epam.dogsapp.FilterConnect</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>active</param-name>-->
+            <!--<param-value>true</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>Filter</filter-name>-->
+        <!--<url-pattern>*.html</url-pattern>-->
+    <!--</filter-mapping>-->
 </web-app>
