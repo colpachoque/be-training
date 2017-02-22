@@ -3,7 +3,7 @@ package com.epam.dogsapp;
 import javax.servlet.*;
 import java.io.IOException;
 
-public class FilterConnect implements Filter {
+public class ExFilter  implements Filter {
     private FilterConfig config = null;
     private boolean active = false;
 
@@ -17,13 +17,13 @@ public class FilterConnect implements Filter {
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         if (this.active) {
-            System.out.println("pikpikpik");
+            System.out.println("ExFilter");
         }
         filterChain.doFilter(servletRequest, servletResponse);
-        System.out.println("after");
+        System.out.println("OutExFilter");
     }
 
     public void destroy() {
-        this.config = null;
+
     }
 }

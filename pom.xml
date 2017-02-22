@@ -35,19 +35,12 @@
           </execution>
         </executions>
       </plugin>
-      <!--<plugin>-->
-        <!--<artifactId>maven-clean-plugin</artifactId>-->
-        <!--<version>2.4.1</version>-->
-        <!--<executions>-->
-          <!--<execution>-->
-            <!--<id>default-clean</id>-->
-            <!--<phase>none</phase>-->
-          <!--</execution>-->
-        <!--</executions>-->
-      <!--</plugin>-->
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
         <artifactId>tomcat7-maven-plugin</artifactId>
+        <configuration>
+          <port>8180</port>
+        </configuration>
       </plugin>
     </plugins>
   </build>
