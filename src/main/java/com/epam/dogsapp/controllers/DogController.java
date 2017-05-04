@@ -4,44 +4,34 @@ import com.epam.dogsapp.Dog;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class DogController {
-    private List<Dog> dogs = new ArrayList<Dog>();
+    private Map<Integer, Dog> dogs = Collections.synchronizedMap(new HashMap<Integer, Dog>());
 
     @PostConstruct
     public void init() {
         for (int i = 0 ; i < 10; i++) {
-            dogs.add(new Dog(i, "Name" + i, "Korgi" + i, 50 +i));
+            dogs.put(i, (new Dog(i, "Name" + i, "Korgi" + i, 50 + i)));
         }
     }
 
     @RequestMapping(value = "/dog", method = RequestMethod.GET)
-    public @ResponseBody List<Dog> getAllDogs() {
+    public @ResponseBody
+    Map getAllDogs() {
         return dogs;
     }
 
     @RequestMapping(value = "/dog/{id}", method = RequestMethod.GET)
     public @ResponseBody Dog getDog(@PathVariable int id) throws Exception {
-        Dog dog;
-        try {
-            dog = dogs.get(id);
-        } catch(Exception e) {
-            throw new Exception("No dogs with such id");
-        }
-        return dog;
+        return dogs.get(id);
     }
 
     @RequestMapping(value = "/dog/{id}", method = RequestMethod.DELETE)
     public Dog freeDog(@PathVariable int id) throws Exception {
         Dog freeDog;
-        try {
-            freeDog = dogs.get(id);
-        } catch(Exception e) {
-            throw new Exception("No dogs with such id");
-        }
+        freeDog = dogs.get(id);
         dogs.remove(id);
         return freeDog;
     }
@@ -71,12 +61,16 @@ public class DogController {
         return dog;
     }
 
-    @RequestMapping(value = "/dog/{id}", method = RequestMethod.POST)
-    public Dog createDog(@PathVariable int id, @RequestParam String name,
-                            @RequestParam String breed, @RequestParam Integer weight) {
+    @RequestMapping(value = "/dog", method = RequestMethod.POST,  produces = "application/json;charset=UTF-8")
+    public Dog createDog(@RequestBody Dog dog) {
+        Integer id = 0;
+        for (Integer key : dogs.keySet()) {
+            if (id < key) {
+                id = key;
+            }
+        }
 
-        Dog dog = new Dog(id, name, breed, weight);
-        dogs.add(dog);
+        dogs.put(id + 1, dog);
 
         return dog;
     }
