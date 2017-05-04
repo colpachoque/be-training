@@ -24,43 +24,38 @@ public class DogController {
     }
 
     @RequestMapping(value = "/dog/{id}", method = RequestMethod.GET)
-    public @ResponseBody Dog getDog(@PathVariable int id) {
-        if (id < 0 || id >= 10) {
-            try {
-                throw new Exception("No dogs with such id");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    public @ResponseBody Dog getDog(@PathVariable int id) throws Exception {
+        Dog dog;
+        try {
+            dog = dogs.get(id);
+        } catch(Exception e) {
+            throw new Exception("No dogs with such id");
         }
-        return dogs.get(id);
+        return dog;
     }
 
     @RequestMapping(value = "/dog/{id}", method = RequestMethod.DELETE)
-    public Dog freeDog(@PathVariable int id) {
-        if (id < 0 || id >= 10) {
-            try {
-                throw new Exception("No dogs with such id");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    public Dog freeDog(@PathVariable int id) throws Exception {
+        Dog freeDog;
+        try {
+            freeDog = dogs.get(id);
+        } catch(Exception e) {
+            throw new Exception("No dogs with such id");
         }
-        Dog freeDog = dogs.get(id);
         dogs.remove(id);
         return freeDog;
     }
 
     @RequestMapping(value = "/dog/{id}", method = RequestMethod.PUT)
     public Dog updateDog(@PathVariable int id, @RequestParam(required = false) String name,
-                            @RequestParam(required = false) String breed, @RequestParam(required = false) Integer weight) {
-        if (id < 0 || id >= 10) {
-            try {
-                throw new Exception("No dogs with such id");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                            @RequestParam(required = false) String breed, @RequestParam(required = false) Integer weight) throws Exception {
+        Dog dog;
+        try {
+            dog = dogs.get(id);
+        } catch(Exception e) {
+            throw new Exception("No dogs with such id");
         }
 
-        Dog dog = dogs.get(id);
         if (name != null) {
             dog.setName(name);
         }
