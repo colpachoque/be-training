@@ -35,37 +35,47 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.apache.tomcat.maven</groupId>
-        <artifactId>tomcat7-maven-plugin</artifactId>
-        <configuration>
-          <port>8180</port>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
+      <!--<plugin>-->
+        <!--<groupId>org.apache.tomcat.maven</groupId>-->
+        <!--<artifactId>tomcat7-maven-plugin</artifactId>-->
+        <!--<configuration>-->
+          <!--<port>8180</port>-->
+          <!--<path>/</path>-->
+        <!--</configuration>-->
+      <!--</plugin>-->
+      <!--<plugin>-->
+        <!--<groupId>org.apache.maven.plugins</groupId>-->
+        <!--<artifactId>maven-compiler-plugin</artifactId>-->
+        <!--<configuration>-->
+          <!--<source>1.7</source>-->
+          <!--<target>1.7</target>-->
+        <!--</configuration>-->
+      <!--</plugin>-->
     </plugins>
   </build>
 
   <dependencies>
-    <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
-      <version>6.10</version>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>javax</groupId>
         <artifactId>javaee-web-api</artifactId>
         <version>6.0</version>
         <scope>provided</scope>
     </dependency>
+
+    <!-- JSON dependencies -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>2.9.0.pr3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.9.0.pr3</version>
+    </dependency>
+
+    <!-- Spring dependencies -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
@@ -86,6 +96,8 @@
       <artifactId>spring-webmvc</artifactId>
       <version>5.0.0.M5</version>
     </dependency>
+
+    <!-- TestNG -->
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>

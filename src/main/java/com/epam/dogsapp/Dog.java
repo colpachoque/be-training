@@ -1,11 +1,20 @@
 package com.epam.dogsapp;
 
-public class Dog {
+import java.io.Serializable;
+
+public class Dog implements Serializable{
 
     private int id;
     private String name;
     private String breed;
-    private int weight;
+    private Integer weight;
+
+    public Dog(int id, String name, String breed, int weight) {
+        this.id = id;
+        this.name = name;
+        this.breed = breed;
+        this.weight = weight;
+    }
 
     public int getId() {
         return id;
@@ -37,5 +46,10 @@ public class Dog {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[%s: %s / %s / %s]", id, name, breed, weight);
     }
 }
