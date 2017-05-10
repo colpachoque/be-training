@@ -5,10 +5,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 public class DogController {
-    private Map<Integer, Dog> dogs = Collections.synchronizedMap(new HashMap<Integer, Dog>());
+    private Map<Integer, Dog> dogs = new ConcurrentHashMap<>();
 
     @PostConstruct
     public void init() {
@@ -69,7 +70,7 @@ public class DogController {
                 id = key;
             }
         }
-
+        dog.setId(id);
         dogs.put(id + 1, dog);
 
         return dog;

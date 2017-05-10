@@ -16,6 +16,12 @@ public class Dog implements Serializable{
         this.weight = weight;
     }
 
+    public Dog(String name, String breed, int weight) {
+        this.name = name;
+        this.breed = breed;
+        this.weight = weight;
+    }
+
     public int getId() {
         return id;
     }
