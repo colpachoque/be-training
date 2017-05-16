@@ -70,7 +70,7 @@ public class DogController {
                 id = key;
             }
         }
-        dog.setId(id);
+        dog.setId(id + 1);
         dogs.put(id + 1, dog);
 
         return dog;
