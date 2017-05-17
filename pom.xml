@@ -117,6 +117,18 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.unitils</groupId>
+      <artifactId>unitils</artifactId>
+      <version>2.4</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.jboss.spec</groupId>
       <artifactId>jboss-javaee-6.0</artifactId>
       <version>1.0.0.Final</version>
@@ -128,10 +140,6 @@
       <artifactId>spring-webmvc</artifactId>
       <version>4.3.8.RELEASE</version>
     </dependency>
-    <dependency>
-      <groupId>org.unitils</groupId>
-      <artifactId>unitils</artifactId>
-      <version>2.4</version>
-    </dependency>
+
   </dependencies>
 </project>

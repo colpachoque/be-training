@@ -37,7 +37,7 @@ public class DogController {
         return freeDog;
     }
 
-    @RequestMapping(value = "/dog/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/dog/{id}", method = RequestMethod.PUT, produces = "application/json;charset=UTF-8")
     public Dog updateDog(@PathVariable int id, @RequestParam(required = false) String name,
                             @RequestParam(required = false) String breed, @RequestParam(required = false) Integer weight) throws Exception {
         Dog dog;
