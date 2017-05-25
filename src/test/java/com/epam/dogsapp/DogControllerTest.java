@@ -46,6 +46,15 @@ public class DogControllerTest {
                 .then().statusCode(404);
     }
 
+    @Test public void shouldFailCreateDogWithShortName() {
+        Dog original = new Dog("p", "tax", 50);
+        given().port(8180).
+                contentType(ContentType.JSON).
+                body(original).
+                then().
+                statusCode(400);
+    }
+
     private Dog getDogById(int id) {
         return given().port(8180).pathParam("id", id).get("/dog/{id}").as(Dog.class);
     }

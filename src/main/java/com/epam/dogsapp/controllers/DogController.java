@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import javax.validation.Valid;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -46,8 +47,8 @@ public class DogController {
     }
 
     @RequestMapping(value = "/dog/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Dog> updateDog(@PathVariable int id, @RequestParam(required = false) String name,
-                            @RequestParam(required = false) String breed, @RequestParam(required = false) Integer weight) throws Exception {
+    public ResponseEntity<Dog> updateDog(@PathVariable int id, @Valid @RequestParam(required = false) String name,
+                            @RequestParam(required = false) String breed, @Valid @RequestParam(required = false) Integer weight) throws Exception {
         Dog dog;
         try {
             dog = dogs.get(id);
@@ -70,8 +71,8 @@ public class DogController {
         return new ResponseEntity<>(dog, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/dog", method = RequestMethod.POST,  produces = "application/json;charset=UTF-8")
-    public ResponseEntity<Dog> createDog(@RequestBody Dog dog) {
+    @RequestMapping(value = "/dog", method = RequestMethod.POST)
+    public ResponseEntity<Dog> createDog(@Valid @RequestBody Dog dog) {
         Integer id = 0;
         for (Integer key : dogs.keySet()) {
             if (id < key) {

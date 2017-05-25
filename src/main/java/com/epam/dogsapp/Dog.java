@@ -1,12 +1,16 @@
 package com.epam.dogsapp;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 public class Dog implements Serializable{
 
     private int id;
+    @Size(min = 2, max = 100)
     private String name;
     private String breed;
+    @Min(0)
     private Integer weight;
 
     public Dog() {

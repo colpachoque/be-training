@@ -69,6 +69,17 @@ public class DogControllerTestMockMvc {
 
     }
 
+    @Test
+    public void shouldFailCreateDogWithShortName() throws Exception {
+        Dog dog = new Dog("S", "Husky", 7);
+        mvc.perform(post("/dog")
+                .content(convertObjectToJson(dog))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+
+
     public Integer postDog(Dog dog) throws Exception {
         MvcResult res = this.mvc.perform(post("/dog").contentType(MediaType.APPLICATION_JSON)
                 .content(convertObjectToJson(dog)))
