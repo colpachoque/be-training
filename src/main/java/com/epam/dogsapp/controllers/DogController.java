@@ -1,6 +1,8 @@
 package com.epam.dogsapp.controllers;
 
 import com.epam.dogsapp.Dog;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -25,26 +27,31 @@ public class DogController {
     }
 
     @RequestMapping(value = "/dog/{id}", method = RequestMethod.GET)
-    public @ResponseBody Dog getDog(@PathVariable int id) throws Exception {
-        return dogs.get(id);
+    public ResponseEntity<Dog> getDog(@PathVariable int id) throws Exception {
+        Dog dog = dogs.get(id);
+        if (dog == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(dog, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/dog/{id}", method = RequestMethod.DELETE)
-    public Dog freeDog(@PathVariable int id) throws Exception {
-        Dog freeDog;
-        freeDog = dogs.get(id);
-        dogs.remove(id);
-        return freeDog;
+    public ResponseEntity<Dog> freeDog(@PathVariable int id) throws Exception {
+        Dog freeDog = dogs.remove(id);
+        if (freeDog == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(freeDog, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/dog/{id}", method = RequestMethod.PUT)
-    public Dog updateDog(@PathVariable int id, @RequestParam(required = false) String name,
+    public ResponseEntity<Dog> updateDog(@PathVariable int id, @RequestParam(required = false) String name,
                             @RequestParam(required = false) String breed, @RequestParam(required = false) Integer weight) throws Exception {
         Dog dog;
         try {
             dog = dogs.get(id);
         } catch(Exception e) {
-            throw new Exception("No dogs with such id");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         if (name != null) {
@@ -59,7 +66,7 @@ public class DogController {
             dog.setWeight(weight);
         }
 
-        return dog;
+        return new ResponseEntity<>(dog, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/dog", method = RequestMethod.POST,  produces = "application/json;charset=UTF-8")

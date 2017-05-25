@@ -1,16 +1,14 @@
 package com.epam.dogsapp;
 
-        import io.restassured.RestAssured;
-        import io.restassured.http.ContentType;
-        import io.restassured.response.Response;
-        import org.testng.annotations.BeforeTest;
-        import org.testng.annotations.Test;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.parsing.Parser;
 
-        import static io.restassured.RestAssured.given;
-        import static io.restassured.RestAssured.when;
-        import static org.hamcrest.core.IsEqual.equalTo;
-        import static org.testng.AssertJUnit.assertTrue;
-        import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import static io.restassured.RestAssured.given;
+import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 
 public class DogControllerTest {
 
@@ -24,7 +22,7 @@ public class DogControllerTest {
         Dog created = postDog(original);
         original.setId(created.getId());
         Dog fromDb = getDogById(original.getId());
-//        assertReflectionEquals(original, fromDb);
+        assertReflectionEquals(original, fromDb);
     }
 
     private Dog getDogById(int id) {
@@ -45,23 +43,25 @@ public class DogControllerTest {
         original.setId(created.getId());
         original.setWeight(3);
         Dog updatedDog = putDog(original);
-//        assert(updatedDog.getWeight(), original.getWeight());
+        assertReflectionEquals(original, updatedDog);
     }
 
     private Dog putDog(Dog original) {
         return given().port(8180).
                 contentType(ContentType.JSON).accept(ContentType.JSON).
                 body(original).
-                when().pathParam("id", original.getId()).post("/dog/{id}").as(Dog.class);
+                when().pathParam("id", original.getId()).queryParam("weight", original.getWeight()).put("/dog/{id}").as(Dog.class);
     }
 
     @Test
     public void shouldDeleteDog() {
+        RestAssured.defaultParser = Parser.JSON;
         Dog original = new Dog("Freedom", "dog", 20);
         Dog created = postDog(original);
         original.setId(created.getId());
         deleteDog(original);
-        Dog dog = getDogById(original.getId());
+        given().port(8180).pathParam("id", original.getId()).get("/dog/{id}")
+                .then().statusCode(404);
     }
 
     private Dog deleteDog(Dog original) {
