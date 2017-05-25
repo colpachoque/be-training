@@ -1,6 +1,7 @@
 package com.epam.dogsapp.controllers;
 
 import com.epam.dogsapp.Dog;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -70,7 +71,7 @@ public class DogController {
     }
 
     @RequestMapping(value = "/dog", method = RequestMethod.POST,  produces = "application/json;charset=UTF-8")
-    public Dog createDog(@RequestBody Dog dog) {
+    public ResponseEntity<Dog> createDog(@RequestBody Dog dog) {
         Integer id = 0;
         for (Integer key : dogs.keySet()) {
             if (id < key) {
@@ -80,6 +81,9 @@ public class DogController {
         dog.setId(id + 1);
         dogs.put(id + 1, dog);
 
-        return dog;
+        HttpHeaders header = new HttpHeaders();
+        header.set("Id", String.valueOf(dog.getId()));
+
+        return new ResponseEntity<>(dog, header, HttpStatus.OK);
     }
 }

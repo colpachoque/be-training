@@ -25,17 +25,6 @@ public class DogControllerTest {
         assertReflectionEquals(original, fromDb);
     }
 
-    private Dog getDogById(int id) {
-        return given().port(8180).pathParam("id", id).get("/dog/{id}").as(Dog.class);
-    }
-
-    private Dog postDog(Dog original) {
-        return given().port(8180).
-                contentType(ContentType.JSON).accept(ContentType.JSON).
-                body(original).
-                when().post("/dog").as(Dog.class);
-    }
-
     @Test
     public void shouldUpdateDog() {
         Dog original = new Dog("Francheska", "chinchilla", 2);
@@ -44,13 +33,6 @@ public class DogControllerTest {
         original.setWeight(3);
         Dog updatedDog = putDog(original);
         assertReflectionEquals(original, updatedDog);
-    }
-
-    private Dog putDog(Dog original) {
-        return given().port(8180).
-                contentType(ContentType.JSON).accept(ContentType.JSON).
-                body(original).
-                when().pathParam("id", original.getId()).queryParam("weight", original.getWeight()).put("/dog/{id}").as(Dog.class);
     }
 
     @Test
@@ -63,6 +45,24 @@ public class DogControllerTest {
         given().port(8180).pathParam("id", original.getId()).get("/dog/{id}")
                 .then().statusCode(404);
     }
+
+    private Dog getDogById(int id) {
+        return given().port(8180).pathParam("id", id).get("/dog/{id}").as(Dog.class);
+    }
+
+    private Dog postDog(Dog original) {
+        return given().port(8180).
+                contentType(ContentType.JSON).accept(ContentType.JSON).
+                body(original).
+                when().post("/dog").as(Dog.class);
+    }
+    private Dog putDog(Dog original) {
+        return given().port(8180).
+                contentType(ContentType.JSON).accept(ContentType.JSON).
+                body(original).
+                when().pathParam("id", original.getId()).queryParam("weight", original.getWeight()).put("/dog/{id}").as(Dog.class);
+    }
+
 
     private Dog deleteDog(Dog original) {
         return given().port(8180).
