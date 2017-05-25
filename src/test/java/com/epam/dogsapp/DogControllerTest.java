@@ -1,13 +1,14 @@
 package com.epam.dogsapp;
 
-        import io.restassured.RestAssured;
-        import io.restassured.http.ContentType;
-        import io.restassured.parsing.Parser;
-        import org.testng.annotations.BeforeTest;
-        import org.testng.annotations.Test;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.parsing.Parser;
 
-        import static io.restassured.RestAssured.given;
-        import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import static io.restassured.RestAssured.given;
+import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 
 public class DogControllerTest {
 
@@ -58,8 +59,9 @@ public class DogControllerTest {
         Dog original = new Dog("Freedom", "dog", 20);
         Dog created = postDog(original);
         original.setId(created.getId());
-        Dog freedog = deleteDog(original);
-        assertReflectionEquals(original, freedog);
+        deleteDog(original);
+        given().port(8180).pathParam("id", original.getId()).get("/dog/{id}")
+                .then().statusCode(404);
     }
 
     private Dog deleteDog(Dog original) {
